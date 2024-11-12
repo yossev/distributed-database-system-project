@@ -3,6 +3,7 @@ const protoLoader = require('@grpc/proto-loader');
 const packageDefinition = protoLoader.loadSync('../proto/database.proto', {});
 const proto = grpc.loadPackageDefinition(packageDefinition).database;
 
+const { pgClients, getShardIndex } = require('./sharding');
 
 // Datanode takes the data from the coordinator node and stores the data.
 

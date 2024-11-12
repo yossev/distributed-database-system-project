@@ -4,6 +4,8 @@ const packageDefinition = protoLoader.loadSync('../proto/database.proto', {});
 const proto = grpc.loadPackageDefinition(packageDefinition).database;
 
 
+const { pgClients, getShardIndex } = require('./sharding');
+
 
 
 // TEST INIT CLIENT
@@ -15,18 +17,6 @@ const DataNodes = [
 
     
 ];
-
-// Sharding Logic
-
-const getShardIndex = (key) =>{
-    // Hash the key
-    const hash = require('crypto').createHash('md5').update(key).digest('hex');
-    return parseInt(hash, 16) % DataNodes.length; // return the shard index
-}
-
-
-
-
 
 const server = new grpc.Server();
 
